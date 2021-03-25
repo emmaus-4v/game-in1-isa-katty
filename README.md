@@ -11,14 +11,17 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] maak index.html, style.css en script.js met canvas
 - [ ] teken speler
 - [ ] beweeg speler
-- [ ] ... *(vul zelf aan)*
+- [ ] het spelveld maken
+- [ ] speler kunnen laten bewegen in het veld
+- [ ] verzamelitems programmeren
+- [ ] verzamelitems inhet veld en zorgen dat de speler het kan oppakken
 - [ ] punten op scherm zetten
 - [ ] punten kunnen scoren
 - [ ] uitlegscherm
 
 Uitbreiding: *bedenk iets, bijvoorbeeld meer tegenstanders*
-- [ ] *later uitwerken*
-- [ ] *later uitwerken*
+- [ ] meerdere levels
+- [ ] verschillende veldjes
 - [ ] *later uitwerken*
 
 Uitbreiding: *bedenk iets, bijvoorbeeld bewegende achtergrond*
