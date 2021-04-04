@@ -1,3 +1,5 @@
+
+
 /// @ts-check
 /// <reference path=".gitpod/p5.global-mode.d.ts" />
 "use strict";
@@ -22,8 +24,8 @@ const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
-var spelerX = 200; // x-positie van speler
-var spelerY = 100; // y-positie van speler
+var spelerX = 200; // (begin)x-positie van speler
+var spelerY = 450; // (begin)y-positie van speler
 
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
@@ -78,7 +80,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill("white");
-  rect(300 , 450, 100, 100);
+  rect(x, y, 100, 100);
 };
 
 
@@ -86,7 +88,7 @@ var tekenSpeler = function(x, y) {
  * Updatet globale variabelen met positie van vijand of tegenspeler
  */
 var beweegVijand = function() {
-    
+
 };
 
 
@@ -103,6 +105,30 @@ var beweegKogel = function() {
  * Updatet globale variabele spelerX en spelerY
  */
 var beweegSpeler = function() {
+  tekenVeld();
+  background('blue');
+  tekenSpeler(spelerX, spelerY)
+
+  if (keyIsDown(LEFT_ARROW)) {
+
+    spelerX = spelerX - 5;
+  }
+  
+   if (keyIsDown(RIGHT_ARROW)) {
+     
+    spelerX = spelerX + 5;
+  }
+
+  if(keyIsDown(UP_ARROW)) {
+
+    spelerY = spelerY - 5;
+  }
+  
+  if (keyIsDown(DOWN_ARROW)) {
+    
+    spelerY = spelerY + 5;
+  }
+
 
 };
 
@@ -187,3 +213,8 @@ function draw() {
       break;
   }
 }
+
+
+
+
+
