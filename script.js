@@ -35,6 +35,11 @@ var vijandY = 0;   // y-positie van vijand
 
 var score = 0; // aantal behaalde punten
 
+var arrowLeft = 37; // toetsenbord pijltje links
+var arrowRight = 39; // toetsenbord pijltje rechts
+var arrowUp = 38; // toetsenbord pijltje naar boven
+var arrowDown = 40; // toetsenbord pijltje naar beneden 
+
 
 
 
@@ -105,33 +110,47 @@ var beweegKogel = function() {
  * Updatet globale variabele spelerX en spelerY
  */
 var beweegSpeler = function() {
+ 
   tekenVeld();
   background('blue');
   tekenSpeler(spelerX, spelerY)
 
-  if (keyIsDown(LEFT_ARROW)) {
+  if (keyIsDown(arrowLeft)) {
 
     spelerX = spelerX - 5;
   }
   
-   if (keyIsDown(RIGHT_ARROW)) {
+   if (keyIsDown(arrowRight)) {
      
     spelerX = spelerX + 5;
   }
 
-  if(keyIsDown(UP_ARROW)) {
+  if(keyIsDown(arrowUp)) {
 
     spelerY = spelerY - 5;
   }
   
-  if (keyIsDown(DOWN_ARROW)) {
+  if (keyIsDown(arrowDown)) {
     
     spelerY = spelerY + 5;
   }
 
-
 };
 
+
+/*var veldGrens = function {
+    var spelerLinkergrens = x<0;
+    var spelerRechtergrens = x>400;
+
+    if(spelerLinkergrens) {
+      spelerX = 0;
+    }
+
+    if(spelerRechtergrens) {
+      
+    }
+
+}; */
 
 /**
  * Zoekt uit of de vijand is geraakt
@@ -189,6 +208,7 @@ function draw() {
       beweegVijand();
       beweegKogel();
       beweegSpeler();
+      /*veldGrens ();*/
       
       if (checkVijandGeraakt()) {
         // punten erbij
