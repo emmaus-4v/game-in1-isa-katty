@@ -110,11 +110,8 @@ var beweegKogel = function() {
  * Updatet globale variabele spelerX en spelerY
  */
 var beweegSpeler = function() {
- 
-  tekenVeld();
-  background('blue');
-  tekenSpeler(spelerX, spelerY)
 
+  /* beweeg naar aanleiding van toetsen */
   if (keyIsDown(arrowLeft)) {
 
     spelerX = spelerX - 5;
@@ -135,12 +132,21 @@ var beweegSpeler = function() {
     spelerY = spelerY + 5;
   }
 
+  /* beperkt beweging tot veld */
+  
+   if(spelerX<0) {
+      spelerX = 0;
+    }
+
+    if(spelerX>1280) {
+      spelerX=1280;
+    }
 };
 
 
-/*var veldGrens = function {
-    var spelerLinkergrens = x<0;
-    var spelerRechtergrens = x>400;
+var veldGrens = function() {
+    var spelerLinkergrens = spelerX<0;
+    var spelerRechtergrens = spelerX>1280; 
 
     if(spelerLinkergrens) {
       spelerX = 0;
@@ -150,7 +156,7 @@ var beweegSpeler = function() {
       
     }
 
-}; */
+}; 
 
 /**
  * Zoekt uit of de vijand is geraakt
@@ -208,7 +214,6 @@ function draw() {
       beweegVijand();
       beweegKogel();
       beweegSpeler();
-      /*veldGrens ();*/
       
       if (checkVijandGeraakt()) {
         // punten erbij
