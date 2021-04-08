@@ -143,21 +143,6 @@ var beweegSpeler = function() {
     }
 };
 
-
-var veldGrens = function() {
-    var spelerLinkergrens = spelerX<0;
-    var spelerRechtergrens = spelerX>1280; 
-
-    if(spelerLinkergrens) {
-      spelerX = 0;
-    }
-
-    if(spelerRechtergrens) {
-      
-    }
-
-}; 
-
 /**
  * Zoekt uit of de vijand is geraakt
  * @returns {boolean} true als vijand is geraakt
