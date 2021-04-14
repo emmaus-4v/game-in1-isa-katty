@@ -37,8 +37,8 @@ var score = 0; // aantal behaalde punten
 const arrowRight = 39; // toetsenbord pijltje rechts
 const arrowUp = 38; // toetsenbord pijltje naar boven
 const arrowDown = 40; // toetsenbord pijltje naar beneden 
-const arrowLeft = 37;
-const Space = 32; 
+const arrowLeft = 37; // toetsenbord pijltje naar links
+const Space = 32; // toetsenbord space 
 
 var gravity = +1;
 var ySpeed = -3;
