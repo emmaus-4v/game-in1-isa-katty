@@ -10,7 +10,7 @@ Gemaakt door:
 Basis: uitleg, spelen, afgaan en punten
 - [x] maak index.html, style.css en script.js met canvas
 - [x] teken speler
-- [ ] beweeg speler
+- [x] beweeg speler
 - [x] het spelveld maken
 - [ ] speler kunnen laten bewegen in het veld
 - [ ] verzamelitems programmeren

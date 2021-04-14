@@ -55,6 +55,8 @@ var arrowDown = 40; // toetsenbord pijltje naar beneden
 var tekenVeld = function () {
   fill("green");
   rect(20, 550, 1240, 200);
+  rect(350, 400, 100, 150);
+  rect(550, 300, 100, 250);
 };
 
 
