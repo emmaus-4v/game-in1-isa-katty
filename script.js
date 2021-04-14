@@ -34,11 +34,16 @@ var vijandX = 0;   // x-positie van vijand
 var vijandY = 0;   // y-positie van vijand
 
 var score = 0; // aantal behaalde punten
+const arrowRight = 39; // toetsenbord pijltje rechts
+const arrowUp = 38; // toetsenbord pijltje naar boven
+const arrowDown = 40; // toetsenbord pijltje naar beneden 
+const arrowLeft = 37;
+const Space = 32; 
 
-var arrowLeft = 37; // toetsenbord pijltje links
-var arrowRight = 39; // toetsenbord pijltje rechts
-var arrowUp = 38; // toetsenbord pijltje naar boven
-var arrowDown = 40; // toetsenbord pijltje naar beneden 
+var gravity = +1;
+var ySpeed = -3;
+
+
 
 
 
@@ -87,7 +92,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill("white");
-  rect(x, y, 100, 100);
+  rect(x, spelerY, 100, 100);
 };
 
 
@@ -113,18 +118,19 @@ var beweegKogel = function() {
  */
 var beweegSpeler = function() {
 
-  /* beweeg naar aanleiding van toetsen */
+  /* lopen links/rechts naar aanleiding van toetsen */
   if (keyIsDown(arrowLeft)) {
 
     spelerX = spelerX - 5;
   }
-  
-   if (keyIsDown(arrowRight)) {
-     
-    spelerX = spelerX + 5;
-  }
 
-  if(keyIsDown(arrowUp)) {
+    if (keyIsDown(arrowRight)) {
+
+    spelerY = spelerY + 5;
+  }
+  
+
+  /*if(keyIsDown(arrowUp)) {
 
     spelerY = spelerY - 5;
   }
@@ -132,16 +138,34 @@ var beweegSpeler = function() {
   if (keyIsDown(arrowDown)) {
     
     spelerY = spelerY + 5;
+  }*/
+
+  /* springen naar aanleiding van toetsen */
+
+  if (keyIsDown (arrowUp && Space)) {
+
+
+    spelerY = spelerY + ySpeed;
+     ySpeed = ySpeed + gravity;
+   
   }
 
   /* beperkt beweging tot veld */
   
-   if(spelerX<0) {
+   if(spelerX<=0) {
       spelerX = 0;
     }
 
     if(spelerX>1280) {
       spelerX=1280;
+    }
+
+    if(spelerY<0) {
+        spelerY = 0;
+    }
+
+    if(spelerY>720) {
+        spelerY = 720;
     }
 };
 
@@ -187,7 +211,7 @@ function setup() {
 
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
-}
+};
 
 
 /**
@@ -195,6 +219,7 @@ function setup() {
  * de code in deze functie wordt meerdere keren per seconde
  * uitgevoerd door de p5 library, nadat de setup functie klaar is
  */
+
 function draw() {
   switch (spelStatus) {
     case SPELEN:
