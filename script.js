@@ -86,6 +86,13 @@ var tekenVijand = function(x, y) {
 
 };
 
+/**
+ * tekent de munten
+ */
+var tekenMunten = function() {
+    fill("yellow");
+    ellipse(50, 50, 60, 60);
+};
 
 /**
  * Tekent de kogel of de bal
@@ -153,7 +160,7 @@ var beweegSpeler = function() {
 
   /* springen naar aanleiding van toetsen */
 
-  if (keyIsDown (arrowUp && Space)) {
+  if (keyIsDown (arrowUp) && keyIsDown (Space)) {
 
 
     spelerY = spelerY + ySpeed;
