@@ -12,12 +12,12 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] teken speler
 - [x] beweeg speler
 - [x] het spelveld maken
-- [ ] speler kunnen laten bewegen in het veld
-- [ ] verzamelitems programmeren
-- [ ] verzamelitems inhet veld en zorgen dat de speler het kan oppakken
-- [ ] punten op scherm zetten
-- [ ] punten kunnen scoren
-- [ ] uitlegscherm
+- [x] speler kunnen laten bewegen in het veld
+- [X] verzamelitems programmeren
+- [X] verzamelitems inhet veld en zorgen dat de speler het kan oppakken
+- [X] punten op scherm zetten
+- [X] punten kunnen scoren
+- [X] uitlegscherm
 
 Uitbreiding: *bedenk iets, bijvoorbeeld meer tegenstanders*
 - [ ] meerdere levels
