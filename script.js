@@ -4,6 +4,9 @@
 /// <reference path=".gitpod/p5.global-mode.d.ts" />
 "use strict";
 
+// https://molleindustria.github.io/p5.play/
+// https://happycoding.io/tutorials/processing/collision-detection
+
 /* Game opdracht
    Informatica - Emmauscollege Rotterdam
    Template voor een game in JavaScript met de p5 library
@@ -23,7 +26,7 @@ const UITLEG = 0;
 const SPELEN = 1;
 const GAMEOVER = 2;
 const WIN = 3;
-var spelStatus = SPELEN;
+var spelStatus = UITLEG;
 
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
@@ -49,6 +52,14 @@ var obstakels; // obstakels
 const GRAVITY = 0.1 // zwartekracht
 var grond; // grond
 
+// fotos
+var groundImg;
+var bgImg;
+var spikeImg;
+var doelImg;
+var muntImg;
+var spelerImg;
+
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
@@ -58,22 +69,22 @@ var grond; // grond
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-    // teken grond
-    grond = createSprite(650, 649, 1240, 200)
-    grond.shapeColor = "green"
+    // background('blue');
+    // Achtergrond plaatje
+    image(bgImg, 0, 0);
 
     // teken doel
-    fill("white");
-    rect(1100, 350, 10, 200);
-    rect(1130, 350, 20, 100);
-    rect(1170, 350, 20, 100);
-    rect(1210, 350, 20, 100);
+    image(doelImg, 990, 250, 300, 300);
 
-    fill("black")
-    rect(1110, 350, 20, 100);
-    rect(1150, 350, 20, 100);
-    rect(1190, 350, 20, 100);
+    // teken grond
+    image(groundImg, 0, 450, 1240, 200);
 
+    // teken een piek voor elke obstakel behalve de laatste
+    obstakels.forEach((obstakel, i) => {
+        if (i != obstakels.size() - 1) {
+            image(spikeImg, obstakel.position.x + 75, 485, 50, 50);
+        }
+    })
 };
 
 
@@ -94,11 +105,7 @@ function creeerMunten() {
 
     // munten zijn geel en heeft een circle borm
     munten.forEach(munt => {
-        munt.draw = function () {
-            noStroke();
-            fill("yellow")
-            ellipse(0, 0, munt.originalWidth, munt.originalHeight)
-        }
+        munt.addImage(muntImg)
     })
 }
 
@@ -111,9 +118,12 @@ var creeerObstakels = function () {
     obstakels.add(createSprite(600, 425, 100, 250));
     obstakels.add(createSprite(800, 375, 100, 350));
 
-    obstakels.forEach(obstakel => {
-        obstakels.immovable = true // obstakel zijn niet beweegbaar
-        obstakel.shapeColor = "#654321" // hex code voor donker bruin
+    obstakels.forEach((obstakel, i) => {
+        // voeg obstakel foto toe op basis van naam en array index
+        let obstakelImg = loadImage('assets/obstakel' + i + '.png');
+        obstakel.addImage(obstakelImg)
+        obstakel.immovable = true // obstakel zijn niet beweegbaar
+        // obstakel.shapeColor = "#654321" // hex code voor donker bruin
     })
 };
 
@@ -122,19 +132,19 @@ var creeerObstakels = function () {
  * @param {number} x x-coördinaat
  * @param {number} y y-coördinaat
  */
-var tekenKogel = function (x, y) {};
+var tekenKogel = function (x, y) { };
 
 
 /**
  * Updatet globale variabelen met positie van vijand of tegenspeler
  */
-var beweegVijand = function () {};
+var beweegVijand = function () { };
 
 
 /**
  * Updatet globale variabelen met positie van kogel of bal
  */
-var beweegKogel = function () {};
+var beweegKogel = function () { };
 
 
 /**
@@ -186,9 +196,6 @@ var checkSpelerGeraakt = function () {
  * @returns {boolean} true als het spel is afgelopen
  */
 var checkGameOver = function () {
-    if (speler.pos.x >= 350 && speler.pos.x <= 750) {
-        console.log("lose")
-    }
     return false;
 };
 
@@ -224,12 +231,13 @@ var checkGescore = function () {
     // speler is bij doel
     if (speler.position.x >= 1075 && speler.position.y >= 350) {
         score += 5
+        // als speler doel heeft bereik creeer munten opnieuw
         creeerMunten()
         resetSpeler()
     }
 
-    // speler is gevalen
-    if (speler.position.x >= 350 && speler.position.x <= 750 && speler.position.y >= 500) {
+    // speler is gevalen tussen de obstakels
+    if (speler.position.x >= 350 && speler.position.x <= 750 && speler.position.y >= 450) {
         score -= 1
         resetSpeler()
     }
@@ -254,6 +262,20 @@ var checkGameOver = function () {
     return false;
 };
 
+/**
+ * preload
+ * laden van bestand
+ * word voor setup() 1x uitgevoerd
+ */
+function preload() {
+    groundImg = loadImage('assets/grond.png');
+    bgImg = loadImage('assets/bg.jpg');
+    spikeImg = loadImage('assets/spike.png');
+    doelImg = loadImage('assets/end.png');
+    muntImg = loadImage('assets/munt.png');
+    spelerImg = loadImage('assets/speler.png');
+}
+
 
 /**
  * setup
@@ -263,13 +285,19 @@ var checkGameOver = function () {
 function setup() {
     // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
     createCanvas(1280, 720);
-
+    // teken grond
+    grond = createSprite(650, 649, 1240, 200)
+    // grond.shapeColor = "green"
+    grond.visible = false
     // toon score
-    scoreElem = createP('Score:').position(900, 0).style('color: white')
+    scoreElem = createP('Score:').position(750, 0)
+        .style('color: black').style('font-size', '24px')
+        .style('font-weight: bold')
 
     // creeer speler 
-    speler = createSprite(210, 460, 90, 90);
-    speler.shapeColor = "white"
+    speler = createSprite(210, 480, 90, 90);
+    speler.addImage(spelerImg)
+    // speler.shapeColor = "white"
     speler.jumping = false
 
     // creeer munten
@@ -282,10 +310,13 @@ function setup() {
 };
 
 /**
- * laat speler springen als het iets aanraak
+ * laat speler springen als het op grond of obstakel sta
  */
 function kanSpringen() {
     if (speler.touching.bottom == true) {
+        speler.jumping = false;
+    }
+    if (speler.position.y >= height - 228) {
         speler.jumping = false;
     }
 }
@@ -299,17 +330,20 @@ function kanSpringen() {
 function draw() {
     switch (spelStatus) {
         case UITLEG:
+
+            // uitleg teksten
             textSize(30)
             text('Gebruik pijltjes toets om te bewegen', 420, 300, 500, 500)
             text('Spatie of pijltje omhoog om te springen', 400, 400, 700, 500)
             text('Klik enter om te starten', 500, 500, 500, 500)
+
+            // als speler op enter klik, start het spel
             if (keyIsDown(enter)) {
                 spelStatus = SPELEN
             }
+
             break;
         case SPELEN:
-            // Kleur de achtergrond blauw, zodat je het kunt zien
-            background('blue');
             // teken veld
             tekenVeld();
 
@@ -318,17 +352,18 @@ function draw() {
             speler.position.y += speler.velocity.y;
 
             // beperk speler beweging binnen canvas
-            speler.position.y = constrain(speler.position.y, 0, height - 215);
+            speler.position.y = constrain(speler.position.y, 0, height - 228);
             speler.position.x = constrain(speler.position.x, 70, width);
 
             // zet aanraking met grond 
             speler.collide(grond)
+
             // laat speler springen als speler op de grond is
             kanSpringen()
 
             // zet aanraking met obstakels 
             speler.collide(obstakels);
-            // laat springen speler op een obstacle sta
+            // laat springen speler op een obstakel sta
             kanSpringen()
 
             // beweging controles voor speler
