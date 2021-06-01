@@ -2,8 +2,8 @@ Deze game is gebaseerd op het template voor 4HV van het Emmauscollege Rotterdam
 
 ## Mijn spel: *naam van het spel*
 Gemaakt door:
-- *naam van leerling 1*
-- *naam van leerling 2*
+- Katty
+- Isa
 
 ## Mijn planning
 
@@ -21,13 +21,14 @@ Basis: uitleg, spelen, afgaan en punten
 
 Uitbreiding: *bedenk iets, bijvoorbeeld meer tegenstanders*
 - [ ] meerdere levels
-- [ ] verschillende veldjes
-- [ ] *later uitwerken*
+- [ ] animatie
+- [ ] geluid
 
 Uitbreiding: *bedenk iets, bijvoorbeeld bewegende achtergrond*
-- [ ] *later uitwerken*
-- [ ] *later uitwerken*
-- [ ] *later uitwerken*
+- [ ] verschillende veldjes
+- [ ] vijand
+- [ ] meer traps
+- [ ] speler upgrades
 
 ## Credits
 - Game template van het Emmauscollege Rotterdam https://github.com/emmauscollege/4HV-game-template
