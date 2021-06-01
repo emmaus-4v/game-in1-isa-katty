@@ -49,6 +49,7 @@ var speler; // speler
 var munten; // munten
 var obstakels; // obstakels
 var pieken; // pieken
+var doel; // doel
 
 const GRAVITY = 0.1 // zwartekracht
 var grond; // grond
@@ -73,9 +74,6 @@ var tekenVeld = function () {
     // background('blue');
     // Achtergrond plaatje
     image(bgImg, 0, 0);
-
-    // teken doel
-    image(doelImg, 990, 250, 300, 300);
 
     // teken grond
     image(groundImg, 0, 450, 1240, 200);
@@ -108,9 +106,9 @@ function creeerMunten() {
  * teken de obstakels
  */
 var creeerObstakels = function () {
-    obstakels.add(createSprite(400, 475, 100, 150));
+    obstakels.add(createSprite(400, 478, 100, 150));
     obstakels.add(createSprite(600, 425, 100, 250));
-    obstakels.add(createSprite(800, 375, 100, 350));
+    obstakels.add(createSprite(800, 378, 100, 350));
 
     obstakels.forEach((obstakel, i) => {
         // voeg obstakel foto toe op basis van naam en array index
@@ -120,7 +118,7 @@ var creeerObstakels = function () {
 
         // teken een piek voor elke obstakel behalve de laatste
         if (i != obstakels.size() - 1) {
-            let piek = createSprite(obstakel.position.x + 100, 510, 50, 50)
+            let piek = createSprite(obstakel.position.x + 100, 513, 50, 50)
             piek.addImage(spikeImg)
             pieken.add(piek)
         }
@@ -239,12 +237,12 @@ var checkGescore = function () {
     speler.overlap(munten, muntGeraak);
 
     // speler is bij doel
-    if (speler.position.x >= 1075 && speler.position.y >= 350) {
+    speler.overlap(doel, () => {
         score += 5
         // als speler doel heeft bereik creeer munten opnieuw
         creeerMunten()
         resetSpeler()
-    }
+    });
 
     // speler is gevalen tussen de obstakels
     speler.overlap(pieken, piekGeraak);
@@ -315,6 +313,10 @@ function setup() {
     pieken = new Group();
     obstakels = new Group();
     creeerObstakels()
+
+    // teken doel
+    doel = createSprite(1100, 445, 300, 300)
+    doel.addImage(doelImg)
 };
 
 /**
