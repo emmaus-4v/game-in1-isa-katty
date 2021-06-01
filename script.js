@@ -26,7 +26,7 @@ const UITLEG = 0;
 const SPELEN = 1;
 const GAMEOVER = 2;
 const WIN = 3;
-var spelStatus = UITLEG;
+var spelStatus = SPELEN;
 
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
@@ -48,6 +48,7 @@ var speler; // speler
 
 var munten; // munten
 var obstakels; // obstakels
+var pieken; // pieken
 
 const GRAVITY = 0.1 // zwartekracht
 var grond; // grond
@@ -78,13 +79,6 @@ var tekenVeld = function () {
 
     // teken grond
     image(groundImg, 0, 450, 1240, 200);
-
-    // teken een piek voor elke obstakel behalve de laatste
-    obstakels.forEach((obstakel, i) => {
-        if (i != obstakels.size() - 1) {
-            image(spikeImg, obstakel.position.x + 75, 485, 50, 50);
-        }
-    })
 };
 
 
@@ -123,7 +117,13 @@ var creeerObstakels = function () {
         let obstakelImg = loadImage('assets/obstakel' + i + '.png');
         obstakel.addImage(obstakelImg)
         obstakel.immovable = true // obstakel zijn niet beweegbaar
-        // obstakel.shapeColor = "#654321" // hex code voor donker bruin
+
+        // teken een piek voor elke obstakel behalve de laatste
+        if (i != obstakels.size() - 1) {
+            let piek = createSprite(obstakel.position.x + 100, 510, 50, 50)
+            piek.addImage(spikeImg)
+            pieken.add(piek)
+        }
     })
 };
 
@@ -213,6 +213,16 @@ function muntGeraak(speler, geraakteMunt) {
 }
 
 /**
+ * actie als speler een piek raak
+ */
+function piekGeraak() {
+    // verminder score
+    score -= 1
+    // zet speler op begin locatie
+    resetSpeler()
+}
+
+/**
  * zet speler op origineel positie
  */
 function resetSpeler() {
@@ -237,10 +247,7 @@ var checkGescore = function () {
     }
 
     // speler is gevalen tussen de obstakels
-    if (speler.position.x >= 350 && speler.position.x <= 750 && speler.position.y >= 450) {
-        score -= 1
-        resetSpeler()
-    }
+    speler.overlap(pieken, piekGeraak);
 
     // update score
     scoreElem.html('Score: ' + score)
@@ -305,6 +312,7 @@ function setup() {
     creeerMunten()
 
     // creeer obstakels
+    pieken = new Group();
     obstakels = new Group();
     creeerObstakels()
 };
@@ -361,8 +369,9 @@ function draw() {
             // laat speler springen als speler op de grond is
             kanSpringen()
 
-            // zet aanraking met obstakels 
+            // zet aanraking met obstakels
             speler.collide(obstakels);
+
             // laat springen speler op een obstakel sta
             kanSpringen()
 
