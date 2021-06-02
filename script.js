@@ -378,9 +378,9 @@ function draw() {
             // uitleg teksten
             textSize(30)
             fill(255, 255, 255, 255);
-            text('Gebruik pijltjes toets om te bewegen', 420, 300, 500, 500)
-            text('Spatie of pijltje omhoog om te springen', 400, 400, 700, 500)
-            text('Klik enter om te starten', 500, 500, 500, 500)
+            text('Gebruik pijltjes toets om de doel te breiken en munten op te pakken', 400, 300, 500, 500)
+            text('Spatie of pijltje omhoog om te springen', 380, 400, 600, 500)
+            text('Klik enter om te starten', 480, 500, 500, 500)
 
             verBergScoreEnLeven();
 
@@ -445,6 +445,7 @@ function draw() {
             fill(255, 255, 255, 255);
             textAlign(CENTER);
             text('GAME OVER!', 420, 300, 500, 500)
+            text('Je score is: ' + score, 420, 400, 500, 500)
             text('Klik enter om naar uitlegscherm te gaan', 420, 500, 500, 500)
 
             verBergScoreEnLeven()
