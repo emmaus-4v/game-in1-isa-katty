@@ -378,8 +378,8 @@ function draw() {
             // uitleg teksten
             textSize(30)
             fill(255, 255, 255, 255);
-            text('Gebruik pijltjes toets om de doel te breiken en munten op te pakken', 400, 300, 500, 500)
-            text('Spatie of pijltje omhoog om te springen', 380, 400, 600, 500)
+            text('Gebruik de pijltjes om het doel te breiken en munten op te pakken', 400, 300, 500, 500)
+            text('Spatie of het pijltje omhoog om te springen', 380, 400, 600, 500)
             text('Klik enter om te starten', 480, 500, 500, 500)
 
             verBergScoreEnLeven();
