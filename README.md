@@ -20,7 +20,7 @@ Basis: uitleg, spelen, afgaan en punten
 - [X] uitlegscherm
 
 Uitbreiding: *bedenk iets, bijvoorbeeld meer tegenstanders*
-- [ ] meerdere levels
+- [x] random obstakels
 - [ ] animatie
 - [ ] geluid
 
