@@ -306,6 +306,7 @@ function draw() {
             // reset score en ga terug naar uitlegscherm
             if (keyIsDown(enter)) {
                 score = 0
+                resetSpeler()
                 spelStatus = UITLEG
             }
 
