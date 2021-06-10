@@ -47,7 +47,7 @@ var obstakelImg;
 var spelerImg;
 
 var volgendeObstakelAfstand;
-var minObstakelAfstand = 400;
+var minObstakelAfstand = 500;
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -196,7 +196,7 @@ function creeerObstakel() {
     // obstakel grote
     const obstakelGrote = random(2, 5);
     // creeer obstakel
-    const obstakel = createSprite(width - 100, grond.position.y - 150 + (obstakelGrote * 5));
+    const obstakel = createSprite(width - 100, grond.position.y - 125 - (obstakelGrote * 10 / 2));
     // voeg foto
     obstakel.addImage(obstakelImg);
     // zet grote
@@ -238,7 +238,7 @@ function draw() {
             // teken veld
             tekenVeld();
 
-            // genereer random obstakeks
+            // genereer random obstakeks. alleen generen als er 0 obstakels zijn of als de laatste obstakel verder is dan volgendeObstakelAfstand
             if (obstakels.length <= 0 || width - obstakels[obstakels.size() - 1].position.x >= volgendeObstakelAfstand) {
                 creeerObstakel();
                 // calculeer volgende obstakel afstand
