@@ -47,7 +47,7 @@ var obstakelImg;
 var spelerImg;
 
 var volgendeObstakelAfstand;
-var minObstakelAfstand = 500;
+var minObstakelAfstand = 400;
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -76,7 +76,7 @@ var beweegSpeler = function () {
         if ((keyIsDown(upArrow) || keyIsDown(space)) &&
             speler.jumping == false // springen niet mogelijk als speler al aan het springen is
         ) {
-            speler.velocity.y = -5 // spring hoogte
+            speler.velocity.y = -5.5 // spring hoogte
             speler.jumping = true // speler is aan het springen
         }
     }
@@ -242,7 +242,7 @@ function draw() {
             if (obstakels.length <= 0 || width - obstakels[obstakels.size() - 1].position.x >= volgendeObstakelAfstand) {
                 creeerObstakel();
                 // calculeer volgende obstakel afstand
-                volgendeObstakelAfstand = random(minObstakelAfstand, width * 1.2);
+                volgendeObstakelAfstand = random(minObstakelAfstand, width);
             }
 
             obstakels.forEach(obstakel => {
