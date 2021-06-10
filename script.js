@@ -26,7 +26,7 @@ const UITLEG = 0;
 const SPELEN = 1;
 const GAMEOVER = 2;
 const WIN = 3;
-var spelStatus = SPELEN;
+var spelStatus = UITLEG;
 
 var score = 0; // aantal behaalde punten
 
@@ -40,13 +40,17 @@ var speler; // speler
 
 var obstakels; // obstakels
 
-const GRAVITY = 0.1 // zwartekracht
+const GRAVITY = 0.2 // zwartekracht
 var grond; // grond
 
 // fotos
 var groundImg;
 var bgImg;
+var obstakelImg;
 var spelerImg;
+
+var volgendeObstakelAfstand;
+var minObstakelAfstand = 500;
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -66,14 +70,6 @@ var tekenVeld = function () {
 };
 
 /**
- * teken de obstakels
- */
-var creeerObstakels = function () {
-
-};
-
-
-/**
  * Kijkt wat de toetsen/muis etc zijn.
  * Update speler coordinaten
  */
@@ -83,7 +79,7 @@ var beweegSpeler = function () {
         if ((keyIsDown(upArrow) || keyIsDown(space)) &&
             speler.jumping == false // springen niet mogelijk als speler al aan het springen is
         ) {
-            speler.velocity.y = -4 // spring hoogte
+            speler.velocity.y = -5 // spring hoogte
             speler.jumping = true // speler is aan het springen
         }
     }
@@ -95,14 +91,6 @@ var beweegSpeler = function () {
  */
 function checkGameOver() {
     return false;
-};
-
-/**
- * Zoekt uit of speler gescroord heeft of dood ging
- */
-var checkScore = function () {
-    // update score en elven
-    scoreElem.html('Score: ' + score)
 };
 
 /**
@@ -120,6 +108,7 @@ var checkWin = function () {
  */
 function preload() {
     groundImg = loadImage('assets/grond.png');
+    obstakelImg = loadImage('assets/obstakel.png');
     bgImg = loadImage('assets/bg.jpg');
     spelerImg = loadImage('assets/speler.png');
 }
@@ -153,11 +142,10 @@ function setup() {
 
     // creeer obstakels
     obstakels = new Group();
-    creeerObstakels()
 };
 
 /**
- * laat speler springen als het op grond of obstakel sta
+ * laat speler springen als het op grond sta
  */
 function kanSpringen() {
     if (speler.touching.bottom == true) {
@@ -174,7 +162,7 @@ function kanSpringen() {
 function tekenGetintAchtergrond() {
     // achtergrond plaatje
     image(bgImg, 0, 0, width, height);
-    // transparant tint
+    // dark overlay
     fill(0, 0, 0, 100);
     rect(0, 0, width, height);
 }
@@ -184,6 +172,40 @@ function tekenGetintAchtergrond() {
  */
 function verBergScore() {
     scoreElem.style('visibility: hidden;');
+}
+
+/**
+ *  Gameover
+ */
+function gameOver() {
+    obstakels.removeSprites()
+    resetSpeler()
+    spelStatus = GAMEOVER
+}
+
+/**
+ * zet speler op origineel positie
+ */
+function resetSpeler() {
+    speler.jumping = false // speler kan weer springen
+    speler.position.x = 200
+    speler.position.y = 450
+}
+
+/**
+ * creeer obstakel
+ */
+function creeerObstakel() {
+    // obstakel grote
+    const obstakelGrote = random(2, 5);
+    // creeer obstakel
+    const obstakel = createSprite(width - 100, grond.position.y - 150 + (obstakelGrote * 5));
+    // voeg foto
+    obstakel.addImage(obstakelImg);
+    // zet grote
+    obstakel.scale = obstakelGrote;
+    // voeg obstakel toe aan p5.play groep
+    obstakels.add(obstakel);
 }
 
 
@@ -196,12 +218,15 @@ function draw() {
     switch (spelStatus) {
         case UITLEG:
             tekenGetintAchtergrond()
-            // uitleg teksten
+
             textSize(30)
-            fill(255, 255, 255, 255);
-            text('Gebruik de pijltjes om het doel te bereiken en munten op te pakken', 400, 300, 500, 500)
-            text('Spatie of het pijltje omhoog om te springen', 380, 400, 600, 500)
-            text('Klik enter om te starten', 480, 500, 500, 500)
+            // wit teksten
+            fill(255);
+            // uitleg teksten
+            textAlign(CENTER);
+            text('Vermijd obstakels', width / 2, height / 3)
+            text('Spatie of pijltje omhoog om te springen', width / 2, height / 2)
+            text('Klik enter om te starten', width / 2, height / 1.5)
 
             verBergScore();
 
@@ -216,7 +241,25 @@ function draw() {
             // teken veld
             tekenVeld();
 
-            // toon score en leven
+            // genereer random obstakeks
+            if (obstakels.length <= 0 || width - obstakels[obstakels.size() - 1].position.x >= volgendeObstakelAfstand) {
+                creeerObstakel();
+                // calculeer volgende obstakel afstand
+                volgendeObstakelAfstand = random(minObstakelAfstand, width * 1.2);
+            }
+
+            obstakels.forEach(obstakel => {
+                // snelheid van obstakel
+                obstakel.position.x -= 8;
+                // verwijderd obstakel als het buiten platform komt
+                if (obstakel.position.x < 75) {
+                    obstakel.remove();
+                    // voeg score toe
+                    score++
+                }
+            })
+
+            // toon score
             scoreElem.style('visibility: visible;')
 
             // zwartekracht
@@ -230,54 +273,43 @@ function draw() {
             // zet aanraking met grond 
             speler.collide(grond)
 
-            // laat speler springen als speler op de grond is
-            kanSpringen()
-
             // zet aanraking met obstakels
-            speler.collide(obstakels);
+            speler.collide(obstakels, gameOver);
 
-            // laat springen speler op een obstakel sta
+            // kan speler weer springen?
             kanSpringen()
 
             // beweging controles voor speler
             beweegSpeler();
 
-            // check score
-            checkScore()
+            // update score
+            scoreElem.html('Score: ' + score)
 
-            if (checkWin()) {
-                spelStatus = WIN;
-            }
-            if (checkGameOver()) {
-                spelStatus = GAMEOVER;
-            }
-
-            // teken spelers, obstakel, grond en munten
+            // teken spelers, obstakel en grond
             drawSprites();
 
             break;
         case GAMEOVER:
-            // Achtergrond plaatje
             tekenGetintAchtergrond();
+            verBergScore();
 
-            // dark overlay
-            fill(0, 0, 0, 100);
-            rect(0, 0, width, height);
-
-            // draw game over text
+            // teken gameover texten
             textAlign(CENTER);
             textSize(50);
+            // wit tekst
             fill(255);
             text('GAME OVER!', width / 2, height / 3);
 
-            textSize(20);
-            text('Press ENTER to play again.', width / 2, height / 2);
-            text('Score: ' + score, width / 2, height / 1.5);
+            textSize(30);
+            text('Score: ' + score, width / 2, height / 2);
 
-            // reset score en leven en ga terug naar uitlegscherm
+            textSize(20);
+            text('Klik ENTER om opnieuw te beginnen.', width / 2, height / 1.5);
+
+            // reset score en ga terug naar uitlegscherm
             if (keyIsDown(enter)) {
-                spelStatus = UITLEG
                 score = 0
+                spelStatus = UITLEG
             }
 
             break;
