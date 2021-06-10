@@ -15,9 +15,6 @@
    voeg er je eigen code aan toe.
  */
 
-
-
-
 /* ********************************************* */
 /* globale variabelen die je gebruikt in je game */
 /* ********************************************* */
@@ -140,7 +137,7 @@ function setup() {
     // dit zorg ervoor dat de speler maar 1 keer kan springen
     speler.jumping = false
 
-    // creeer obstakels
+    // creeer obstakels groep
     obstakels = new Group();
 };
 
@@ -162,7 +159,7 @@ function kanSpringen() {
 function tekenGetintAchtergrond() {
     // achtergrond plaatje
     image(bgImg, 0, 0, width, height);
-    // dark overlay
+    // zwarte tint
     fill(0, 0, 0, 100);
     rect(0, 0, width, height);
 }
