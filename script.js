@@ -37,7 +37,7 @@ var speler; // speler
 
 var obstakels; // obstakels
 
-const GRAVITY = 0.2 // zwartekracht
+const zwaartekracht = 0.2 // zwaartekracht
 var grond; // grond
 
 // fotos
@@ -260,7 +260,7 @@ function draw() {
             scoreElem.style('visibility: visible;')
 
             // zwartekracht
-            speler.velocity.y += GRAVITY
+            speler.velocity.y += zwaartekracht
             speler.position.y += speler.velocity.y;
 
             // beperk speler beweging binnen canvas
