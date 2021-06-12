@@ -46,8 +46,8 @@ var bgImg;
 var obstakelImg;
 var spelerImg;
 
-var volgendeObstakelAfstand;
-var minObstakelAfstand = 500;
+var volgendeObstakelAfstand; // afstand van volgende obstakel
+var minObstakelAfstand = 450; // minumum afstand voor volgende obstakel
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -259,7 +259,7 @@ function draw() {
             // toon score
             scoreElem.style('visibility: visible;')
 
-            // zwartekracht
+            // zwaartekracht
             speler.velocity.y += zwaartekracht
             speler.position.y += speler.velocity.y;
 
