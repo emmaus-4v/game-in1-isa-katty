@@ -221,9 +221,9 @@ function draw() {
             fill(255);
             // uitleg teksten
             textAlign(CENTER);
-            text('Vermijd obstakels', width / 2, height / 3)
-            text('Spatie of pijltje omhoog om te springen', width / 2, height / 2)
-            text('Klik enter om te starten', width / 2, height / 1.5)
+            text('Vermijd de obstakels', width / 2, height / 3)
+            text('klik spatie of pijltje omhoog om te springen', width / 2, height / 2)
+            text('Klik op enter om te starten', width / 2, height / 1.5)
 
             verBergScore();
 
@@ -301,7 +301,7 @@ function draw() {
             text('Score: ' + score, width / 2, height / 2);
 
             textSize(20);
-            text('Klik ENTER om opnieuw te beginnen.', width / 2, height / 1.5);
+            text('Klik op ENTER om opnieuw te beginnen.', width / 2, height / 1.5);
 
             // reset score en ga terug naar uitlegscherm
             if (keyIsDown(enter)) {

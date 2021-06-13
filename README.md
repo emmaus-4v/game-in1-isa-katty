@@ -14,7 +14,7 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] het spelveld maken
 - [x] speler kunnen laten bewegen in het veld
 - [X] verzamelitems programmeren
-- [X] verzamelitems inhet veld en zorgen dat de speler het kan oppakken
+- [X] verzamelitems in het veld en zorgen dat de speler het kan oppakken
 - [X] punten op scherm zetten
 - [X] punten kunnen scoren
 - [X] uitlegscherm
