@@ -1,6 +1,6 @@
 Deze game is gebaseerd op het template voor 4HV van het Emmauscollege Rotterdam
 
-## Mijn spel: *naam van het spel*
+## Mijn spel: *Henk: de springende steen*
 Gemaakt door:
 - Katty
 - Isa
@@ -13,8 +13,6 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] beweeg speler
 - [x] het spelveld maken
 - [x] speler kunnen laten bewegen in het veld
-- [X] verzamelitems programmeren
-- [X] verzamelitems in het veld en zorgen dat de speler het kan oppakken
 - [X] punten op scherm zetten
 - [X] punten kunnen scoren
 - [X] uitlegscherm
